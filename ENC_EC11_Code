@@ -1,0 +1,137 @@
+// Rotary Encoder EC11 Library
+
+#define BUTTON_PIN 3
+
+#include <LiquidCrystal_I2C.h>
+
+//  create lcd object
+LiquidCrystal_I2C lcd(0x27,20,2);
+
+int a = 2;  // pin assigned to A encoder lead
+int b = 3;  // pin assigned to B encoder lead
+int c = 4; // pin assigned to switch encoder lead
+
+int buzzer = A0; // connect buzzer at pin 7 
+
+int enc_value;  // encoder value var
+
+bool flag_00; // flag which will set when encoder make all small cycle
+
+bool lastButtonState; // code i took look at button func...
+bool buttonState; // code i took look at button func...
+
+//  shows encoder value in ticks on lcd
+void lcd_enc_value()
+{
+  lcd.setCursor(0, 1);
+  lcd.print(enc_value);
+  lcd.setCursor(0, 0);
+  Serial.println(enc_value);
+}
+
+//  reads encoder pinstate A - when encoder stopped - always HIGH !!!
+bool a_state()
+{
+  return digitalRead(a);
+}
+
+//  reads encoder pinstate B - when encoder stopped - always HIGH !!!
+bool b_state()
+{
+  return digitalRead(b);
+}
+
+//  SETUP
+void setup()
+{
+  Serial.begin(9600);
+
+  pinMode(a, INPUT);
+  pinMode(b, INPUT);
+  pinMode(c, INPUT);
+
+  // start lcd and check
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0, 1); 
+  lcd.print("lcd ok..");
+
+  enc_value = 0;  // encoder value set to "0"
+
+  //  init flags
+  flag_00 = false;
+
+  bool lastButtonState = LOW;
+}
+
+// LOOP
+void loop() 
+{
+  if(a_state() == 0 && b_state() == 1)  // starts roll cw
+  {
+    while(a_state() == 0) //  3 iteration
+    {
+      if(b_state() == 0)  // 3 iteration
+      {                
+        while(b_state() == 0) // 4 iteration
+        {
+          if(a_state() == 1)  // 4 iteration
+          {
+            enc_value += 1;
+            lcd_enc_value();
+            flag_00 = true;
+          }
+
+          if(flag_00 == true) // exit "while"-cycle in iteration 4
+          {
+            flag_00 = false;
+            break;
+          }
+        }
+      }
+    }    
+  }
+  
+  if(b_state() == 0 && a_state() == 1)  // starts roll ccw
+  {
+    while(b_state() == 0) //  3 iteration
+    {
+      if(a_state() == 0)  // 3 iteration
+      {
+        while(a_state() == 0) // 4 iteration
+        {
+          if(b_state() == 1)  // 4 iteration
+          {
+            enc_value -= 1;
+            lcd_enc_value();
+            flag_00 = true;
+          }
+
+          if(flag_00 == true) // exit "while"-cycle in iteration 4
+          {
+            flag_00 = false;
+            break;
+          }
+        }    
+      }
+    }
+  }
+  
+  //  CHANGE BUTTON STATE POLLING FUNC taken from:
+  //  https://roboticsbackend.com/arduino-push-button-tutorial/
+
+  buttonState = digitalRead(c);
+  if (buttonState != lastButtonState)
+  {
+    lastButtonState = buttonState;
+    if (buttonState == LOW)
+    {
+      // do an action, for example print on Serial
+      Serial.println("Button released");
+    }
+  }
+
+
+
+  
+} //loop_end bracket
