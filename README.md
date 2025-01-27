@@ -1,3 +1,5 @@
+
+
 I tried many encoder libraries for Arduino and I didn't find library which is really works how I want. I decided to wrote my own code. <br/>
 List of components been used: 
 
@@ -23,7 +25,11 @@ At first I tried to get rid of buttons bounce in the code, but it was really not
 I found the idea in internet - using some caps on every encoder's lead.
 Through testing I settled on a cap with a capacity of 1nF and 5K pull-up resistors. <br/>
 
-Schematics for Arduino Nano EC11:
+Schematics and connections for Arduino Nano EC11: <br/>
+A = D2; <br/>
+B = D3; <br/>
+C = D4; <br/>
+Middle Gnd Pin = GND. <br/>
 
 <img src="https://github.com/user-attachments/assets/7b78ef99-b868-441d-bdd0-337699783461" width="320">
 
