@@ -1,3 +1,4 @@
 Hello it's about rotarry enc
 
-![EC11_resized](https://github.com/user-attachments/assets/79e73b00-34f8-40bf-bb21-33f4daa876bb)
+![EC11_resized](https://github.com/user-attachments/assets/f82bcff2-73b2-49e1-a002-9f6d74f2d7b8)
+
