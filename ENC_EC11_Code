@@ -1,33 +1,15 @@
-// Rotary Encoder EC11 Library
-
-#define BUTTON_PIN 3
-
-#include <LiquidCrystal_I2C.h>
-
-//  create lcd object
-LiquidCrystal_I2C lcd(0x27,20,2);
+// Rotary Encoder EC11 code
 
 int a = 2;  // pin assigned to A encoder lead
-int b = 3;  // pin assigned to B encoder lead
-int c = 4; // pin assigned to switch encoder lead
-
-int buzzer = A0; // connect buzzer at pin 7 
+int b = 4;  // pin assigned to B encoder lead
+int c = 3; // pin assigned to switch encoder lead
 
 int enc_value;  // encoder value var
 
 bool flag_00; // flag which will set when encoder make all small cycle
 
-bool lastButtonState; // code i took look at button func...
-bool buttonState; // code i took look at button func...
-
-//  shows encoder value in ticks on lcd
-void lcd_enc_value()
-{
-  lcd.setCursor(0, 1);
-  lcd.print(enc_value);
-  lcd.setCursor(0, 0);
-  Serial.println(enc_value);
-}
+bool lastButtonState; // look at button func...
+bool buttonState; // look at button func...
 
 //  reads encoder pinstate A - when encoder stopped - always HIGH !!!
 bool a_state()
@@ -41,31 +23,7 @@ bool b_state()
   return digitalRead(b);
 }
 
-//  SETUP
-void setup()
-{
-  Serial.begin(9600);
-
-  pinMode(a, INPUT);
-  pinMode(b, INPUT);
-  pinMode(c, INPUT);
-
-  // start lcd and check
-  lcd.init();
-  lcd.backlight();
-  lcd.setCursor(0, 1); 
-  lcd.print("lcd ok..");
-
-  enc_value = 0;  // encoder value set to "0"
-
-  //  init flags
-  flag_00 = false;
-
-  bool lastButtonState = LOW;
-}
-
-// LOOP
-void loop() 
+void check_enc()
 {
   if(a_state() == 0 && b_state() == 1)  // starts roll cw
   {
@@ -78,8 +36,8 @@ void loop()
           if(a_state() == 1)  // 4 iteration
           {
             enc_value += 1;
-            lcd_enc_value();
             flag_00 = true;
+            Serial.println(enc_value);
           }
 
           if(flag_00 == true) // exit "while"-cycle in iteration 4
@@ -103,8 +61,8 @@ void loop()
           if(b_state() == 1)  // 4 iteration
           {
             enc_value -= 1;
-            lcd_enc_value();
             flag_00 = true;
+            Serial.println(enc_value);
           }
 
           if(flag_00 == true) // exit "while"-cycle in iteration 4
@@ -116,20 +74,41 @@ void loop()
       }
     }
   }
-  
+}
+
+void check_button()
+{
   //  CHANGE BUTTON STATE POLLING FUNC taken from:
   //  https://roboticsbackend.com/arduino-push-button-tutorial/
+  
+  // do an action, for example print on Serial
+  Serial.println("Button released");
+}
 
-  buttonState = digitalRead(c);
-  if (buttonState != lastButtonState)
-  {
-    lastButtonState = buttonState;
-    if (buttonState == LOW)
-    {
-      // do an action, for example print on Serial
-      Serial.println("Button released");
-    }
-  }
+
+void setup()
+{
+  Serial.begin(9600);
+
+  pinMode(a, INPUT);
+  pinMode(b, INPUT);
+  pinMode(c, INPUT);
+
+  enc_value = 0;  // encoder value set to "0"
+
+  //  init flags
+  flag_00 = false;
+
+  // enable interrupt on button pin
+  attachInterrupt(digitalPinToInterrupt(c), check_button, RISING);
+
+  bool lastButtonState = LOW;
+}
+
+
+void loop() 
+{
+  check_enc();
 
 
 
