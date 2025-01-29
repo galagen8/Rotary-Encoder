@@ -78,9 +78,6 @@ void check_enc()
 
 void check_button()
 {
-  //  CHANGE BUTTON STATE POLLING FUNC taken from:
-  //  https://roboticsbackend.com/arduino-push-button-tutorial/
-  
   // do an action, for example print on Serial
   Serial.println("Button released");
 }
