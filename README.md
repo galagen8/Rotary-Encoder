@@ -13,7 +13,7 @@ FULL EXPLANATION AND CODE DESCRIPTION
 <br/>
 <br/>
 
-I tried many encoder libraries for Arduino and I didn't find library which is really works how I want. I decided to wrote my own code. <br/>
+I tried many encoder libraries for Arduino and I didn't find library which is really works how I want. I decided to write my own code. <br/>
 List of components been used: 
 
 Arduino Nano = 1 pc,            <br/>
