@@ -1,6 +1,7 @@
 Hello! Just assign A and B encoder leads to your free pins and take a fast look on schematic below. <br/>
 But Encoder Button pin (c) **MUST BE** connected to pin which supports interrupts (for Arduino Nano pins are D2, D3). <br/>
 Encoder ticks and button state are translated to IDE Serial Monitor. <br/>
+I used EC11 Encoder, but I hope it can works with any encoders that has 5 pins. <br/>
 Have fun! 
 
 <hr>
