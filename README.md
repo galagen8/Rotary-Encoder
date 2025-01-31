@@ -1,7 +1,8 @@
-Hello! Just assign A and B encoder leads to your free pins and take a fast look on schematic below. <br/>
-But Encoder Button pin (c) **MUST BE** connected to pin which supports interrupts (for Arduino Nano pins are D2, D3). <br/>
+Hello! Just assign A and B encoder leads to your free I/O pins.  <br/>
+But C button lead **MUST BE** connected to pin supported interrupts (for Arduino Nano pins are D2, D3). <br/>
 Encoder ticks and button state are translated to IDE Serial Monitor. <br/>
-I used EC11 Encoder, but I hope it can works with any encoders that has 5 pins. <br/>
+I used EC11 Encoder, but I hope it can works with many mechanical encoders that use same logics. <br/>
+Also it can works with encoders which doesn't have push button.
 <p align="center">
 Have fun! 
 </p>
@@ -13,7 +14,6 @@ Have fun!
 FULL EXPLANATION AND CODE DESCRIPTION
 </p>
 
-<br/>
 <br/>
 
 I tried many encoder libraries for Arduino and I didn't find library which is really works how I want. I decided to write my own code. <br/>
