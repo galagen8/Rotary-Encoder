@@ -32,7 +32,7 @@ I used EC11 Mechanical Encoder with push button. It's one of the cheapest and re
 <img src="https://github.com/user-attachments/assets/ee62ad6e-cf64-40ab-ba48-58848bedf7d2" width="400">
 </p>
 
-Also it has good quiet click sound and it's very nice feeling to spin it.
+Also it has good quiet click sound and it's very nice feeling to spin it.<br/> <br/>
 As every mechanical button encoder leads has bounce: <br/>
 (https://www.picotech.com/library/blog/what-is-switch-bounce-how-to-implement-debounce). <br/> <br/>
 At first I tried to get rid of AB-encoder leads bounce in the code, but it was really not easy.
